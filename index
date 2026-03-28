@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description"
+        content="AttireSense – AI-powered fashion assistant that helps you look better, effortlessly. Get personalized outfit recommendations based on your style, body, and occasion." />
+    <title>AttireSense – Look Better, Effortlessly</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <style>
+        /* ── Landing Page Specific ── */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 80px;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background: var(--grad-hero);
+            z-index: 0;
+        }
+
+        .hero-orb1 {
+            width: 600px;
+            height: 600px;
+            top: -200px;
+            left: -150px;
+        }
+
+        .hero-orb2 {
+            width: 400px;
+            height: 400px;
+            bottom: -100px;
+            right: -100px;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            margin-bottom: 20px;
+        }
+
+        .hero-title {
+            margin-bottom: 20px;
+        }
+
+        .hero-sub {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 36px;
+            line-height: 1.75;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .hero-visual {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-card-main {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-xl);
+            padding: 28px;
+            width: 100%;
+            max-width: 340px;
+            box-shadow: var(--shadow-glow), var(--shadow-card);
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .hero-card-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .outfit-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .outfit-row:last-child {
+            border-bottom: none;
+        }
+
+        .outfit-row-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: rgba(52, 27, 110, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.95rem;
+        }
+
+        .outfit-row-text small {
+            display: block;
+            font-size: 0.68rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .outfit-row-text span {
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .color-dots {
+            display: flex;
+            gap: 7px;
+            margin-top: 16px;
+        }
+
+        .color-dot {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 1.5px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .hero-floating {
+            position: absolute;
+            animation: float 3s ease-in-out infinite;
+            font-size: 1.8rem;
+            filter: drop-shadow(0 4px 12px rgba(52, 27, 110, 0.5));
+        }
+
+        .f1 {
+            top: -30px;
+            right: 20px;
+            animation-delay: 0s;
+        }
+
+        .f2 {
+            bottom: -20px;
+            left: 10px;
+            animation-delay: 1.2s;
+            font-size: 1.4rem;
+        }
+
+        .f3 {
+            top: 40%;
+            right: -30px;
+            animation-delay: 0.6s;
+            font-size: 1.5rem;
+        }
+
+        /* ── Stats Bar ── */
+        .stats-bar {
+            padding: 30px 0;
+            border-top: 1px solid var(--border-subtle);
+            border-bottom: 1px solid var(--border-subtle);
+            background: rgba(19, 29, 40, 0.6);
+        }
+
+        .stats-inner {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-num {
+            font-size: 2rem;
+            font-weight: 800;
+            background: var(--grad-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+        }
+
+        .stat-desc {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* ── Features Section ── */
+        .features {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header p {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            max-width: 540px;
+            margin: 14px auto 0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .feature-card {
+            padding: 32px 28px;
+        }
+
+        .feature-icon {
+            width: 54px;
+            height: 54px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .feature-icon.purple {
+            background: rgba(52, 27, 110, 0.35);
+        }
+
+        .feature-icon.blue {
+            background: rgba(96, 126, 162, 0.25);
+        }
+
+        .feature-icon.neutral {
+            background: rgba(189, 179, 163, 0.15);
+        }
+
+        .feature-card h3 {
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .feature-card p {
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        /* ── How It Works ── */
+        .how {
+            padding: 80px 0;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            margin-top: 50px;
+            position: relative;
+        }
+
+        .step {
+            text-align: center;
+        }
+
+        .step-num {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: var(--grad-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #fff;
+            margin: 0 auto 18px;
+            box-shadow: 0 0 20px rgba(52, 27, 110, 0.5);
+        }
+
+        .step h3 {
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+
+        .step p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+        }
+
+        /* ── CTA Section ── */
+        .cta-section {
+            padding: 100px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .cta-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-xl);
+            padding: 70px 40px;
+            max-width: 680px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-card .glow-orb {
+            width: 300px;
+            height: 300px;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .cta-card h2 {
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-card p {
+            margin-bottom: 32px;
+            position: relative;
+            z-index: 1;
+            font-size: 1.05rem;
+        }
+
+        /* ── Footer ── */
+        footer {
+            border-top: 1px solid var(--border-subtle);
+            padding: 32px 0;
+        }
+
+        .footer-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .footer-inner p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        @media (max-width: 900px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-visual {
+                display: none;
+            }
+
+            .hero-actions {
+                justify-content: center;
+            }
+
+            .features-grid,
+            .steps-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-inner">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">✨</div>
+                <span>AttireSense</span>
+            </a>
+            <a href="onboarding.html" class="btn btn-primary btn-sm">Get Started →</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="glow-orb glow-purple hero-orb1"></div>
+        <div class="glow-orb glow-blue hero-orb2"></div>
+        <div class="container hero-grid">
+
+            <!-- Left: Copy -->
+            <div>
+                <div class="hero-badge anim-fade-up">
+                    <span class="badge badge-purple">✨ AI-Powered Fashion</span>
+                </div>
+                <h1 class="hero-title anim-fade-up delay-100">
+                    Look Better,<br />
+                    <span class="text-gradient">Effortlessly</span>
+                </h1>
+                <p class="hero-sub anim-fade-up delay-200">
+                    Your personal AI stylist that learns your body type, skin tone, and style—then suggests the perfect
+                    outfit for any occasion.
+                </p>
+                <div class="hero-actions anim-fade-up delay-300">
+                    <a href="onboarding.html" class="btn btn-primary" id="hero-cta">
+                        Build My Style Profile →
+                    </a>
+                    <a href="chat.html" class="btn btn-ghost">
+                        Start Chatting
+                    </a>
+                </div>
+            </div>
+
+            <!-- Right: Floating outfit card -->
+            <div class="hero-visual anim-fade-in delay-400">
+                <div class="hero-card-main">
+                    <div class="hero-card-label">✦ Today's Recommended Outfit</div>
+                    <div class="outfit-row">
+                        <div class="outfit-row-icon">👕</div>
+                        <div class="outfit-row-text">
+                            <small>Top</small>
+                            <span>Light blue slim-fit shirt</span>
+                        </div>
+                    </div>
+                    <div class="outfit-row">
+                        <div class="outfit-row-icon">👖</div>
+                        <div class="outfit-row-text">
+                            <small>Bottom</small>
+                            <span>Dark navy chinos</span>
+                        </div>
+                    </div>
+                    <div class="outfit-row">
+                        <div class="outfit-row-icon">👟</div>
+                        <div class="outfit-row-text">
+                            <small>Shoes</small>
+                            <span>White minimal sneakers</span>
+                        </div>
+                    </div>
+                    <div class="outfit-row">
+                        <div class="outfit-row-icon">⌚</div>
+                        <div class="outfit-row-text">
+                            <small>Accessories</small>
+                            <span>Silver minimalist watch</span>
+                        </div>
+                    </div>
+                    <div class="color-dots">
+                        <div class="color-dot" style="background:#A8C5E0;"></div>
+                        <div class="color-dot" style="background:#1C2B4A;"></div>
+                        <div class="color-dot" style="background:#F5F5F0;"></div>
+                        <div class="color-dot" style="background:#C0C0C0;"></div>
+                    </div>
+                </div>
+                <span class="hero-floating f1">👗</span>
+                <span class="hero-floating f2">🎩</span>
+                <span class="hero-floating f3">💍</span>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Stats Bar -->
+    <div class="stats-bar">
+        <div class="stats-inner">
+            <div class="stat">
+                <div class="stat-num">9</div>
+                <div class="stat-desc">Profile factors analyzed</div>
+            </div>
+            <div class="stat">
+                <div class="stat-num">100%</div>
+                <div class="stat-desc">Personalized recommendations</div>
+            </div>
+            <div class="stat">
+                <div class="stat-num">AI</div>
+                <div class="stat-desc">Powered by Gemini</div>
+            </div>
+            <div class="stat">
+                <div class="stat-num">0</div>
+                <div class="stat-desc">Fashion stress</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="section-header">
+                <span class="badge badge-purple">Features</span>
+                <h2 style="margin-top:14px;">Smart fashion, made simple</h2>
+                <p>Everything you need to dress well every single day.</p>
+            </div>
+            <div class="features-grid">
+                <div class="card feature-card anim-fade-up delay-100">
+                    <div class="feature-icon purple">🎨</div>
+                    <h3>Color-Matched Outfits</h3>
+                    <p>AI analyzes your skin tone and recommends colors that genuinely complement your natural
+                        complexion—no guesswork.</p>
+                </div>
+                <div class="card feature-card anim-fade-up delay-200">
+                    <div class="feature-icon blue">🧍</div>
+                    <h3>Body-Type Aware</h3>
+                    <p>Clothes that fit <em>your</em> proportions. Styling tips tailored to your height, build, and
+                        unique body shape.</p>
+                </div>
+                <div class="card feature-card anim-fade-up delay-300">
+                    <div class="feature-icon neutral">📍</div>
+                    <h3>Occasion & Climate Smart</h3>
+                    <p>Office meeting, date night, or casual Sunday? Rain or shine? AttireSense adapts every
+                        recommendation to your context.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how">
+        <div class="container">
+            <div class="section-header">
+                <span class="badge badge-purple">How It Works</span>
+                <h2 style="margin-top:14px;">Three steps to your best look</h2>
+            </div>
+            <div class="steps-grid">
+                <div class="step">
+                    <div class="step-num">1</div>
+                    <h3>Build Your Profile</h3>
+                    <p>Answer 9 quick questions about your body, style, and lifestyle. Takes under 2 minutes.</p>
+                </div>
+                <div class="step">
+                    <div class="step-num">2</div>
+                    <h3>Chat with Your AI Stylist</h3>
+                    <p>Ask anything — "What should I wear for a job interview?" and get a full, personalized outfit
+                        instantly.</p>
+                </div>
+                <div class="step">
+                    <div class="step-num">3</div>
+                    <h3>Look Great, Feel Confident</h3>
+                    <p>Step out knowing that every piece you wear is chosen to make <em>you</em> look your best.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-card card">
+                <div class="glow-orb glow-purple"></div>
+                <span class="badge badge-purple" style="position:relative;z-index:1;">Get Started Free</span>
+                <h2 style="margin-top:16px;">Ready to dress better?</h2>
+                <p>Build your personal style profile in 2 minutes and let AI handle the rest.</p>
+                <a href="onboarding.html" class="btn btn-primary" id="cta-bottom" style="position:relative;z-index:1;">
+                    Start My Style Journey →
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-inner">
+                <div class="logo">
+                    <div class="logo-icon" style="width:28px;height:28px;font-size:0.85rem;">✨</div>
+                    <span style="font-size:1rem;">AttireSense</span>
+                </div>
+                <p>Look Better, Effortlessly · Powered by Gemini AI</p>
+                <p>© 2026 AttireSense</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>
