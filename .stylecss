@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Set up your AttireSense style profile – personalized AI fashion recommendations based on your body, skin tone, and style preferences." />
+  <title>AttireSense – Build Your Style Profile</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    body { display: flex; flex-direction: column; min-height: 100vh; }
+
+    .onboarding-wrap {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 100px 24px 60px;
+      position: relative;
+    }
+    .ob-glow1 { width:500px; height:500px; top:-150px; left:-200px; }
+    .ob-glow2 { width:350px; height:350px; bottom:-100px; right:-100px; }
+
+    .ob-container {
+      width: 100%;
+      max-width: 540px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header */
+    .ob-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 32px;
+    }
+    .ob-step-info { text-align: right; }
+    .ob-step-num {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+    }
+
+    /* Step card */
+    .ob-card {
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: 40px 36px;
+      box-shadow: var(--shadow-card);
+      min-height: 420px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ob-step {
+      display: none;
+      flex-direction: column;
+      gap: 8px;
+      flex: 1;
+      animation: fadeUp 0.35s ease;
+    }
+    .ob-step.active { display: flex; }
+
+    .ob-step-emoji { font-size: 2.4rem; margin-bottom: 8px; }
+    .ob-step h2 { font-size: 1.5rem; margin-bottom: 4px; }
+    .ob-step .ob-sub {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .options-list { display: flex; flex-direction: column; gap: 10px; }
+    .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+    /* Skin tone swatches */
+    .skin-swatch-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .skin-swatch {
+      width: 46px; height: 46px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 3px solid transparent;
+      transition: var(--transition);
+    }
+    .skin-swatch:hover   { transform: scale(1.15); }
+    .skin-swatch.selected {
+      border-color: #fff;
+      box-shadow: 0 0 0 3px rgba(255,255,255,0.3);
+    }
+
+    /* Height input */
+    .height-input-wrap {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-top: 8px;
+    }
+    .height-input-wrap .input-field { flex: 1; }
+    .height-unit-toggle {
+      display: flex;
+      border: 1.5px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+    .unit-btn {
+      padding: 12px 16px;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: var(--transition);
+      border: none;
+    }
+    .unit-btn.active {
+      background: var(--brand-purple);
+      color: #fff;
+    }
+
+    /* Footer buttons */
+    .ob-foot {
+      display: flex;
+      gap: 12px;
+      margin-top: 28px;
+    }
+    .ob-back {
+      padding: 13px 20px;
+      background: transparent;
+      border: 1.5px solid var(--border-subtle);
+      border-radius: var(--radius-pill);
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .ob-back:hover { border-color: var(--steel-blue); color: var(--text-primary); }
+    .ob-next {
+      flex: 1;
+      padding: 14px;
+      background: var(--grad-button);
+      border: none;
+      border-radius: var(--radius-pill);
+      color: #fff;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: var(--shadow-button);
+      transition: var(--transition);
+    }
+    .ob-next:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(74,40,152,0.65); }
+    .ob-next:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+    @media (max-width: 520px) {
+      .ob-card { padding: 28px 20px; }
+      .options-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">✨</div>
+        <span>AttireSense</span>
+      </a>
+      <div class="text-muted" style="font-size:0.85rem;">Building your style profile</div>
+    </div>
+  </nav>
+
+  <main class="onboarding-wrap">
+    <div class="glow-orb glow-purple ob-glow1"></div>
+    <div class="glow-orb glow-blue ob-glow2"></div>
+
+    <div class="ob-container">
+
+      <!-- Header with progress -->
+      <div class="ob-header">
+        <a href="index.html" class="text-muted" style="font-size:0.85rem;">← Back</a>
+        <div class="ob-step-info">
+          <div class="ob-step-num" id="stepCountText">Step 1 of 9</div>
+        </div>
+      </div>
+      <div class="progress-track" style="margin-bottom:28px;">
+        <div class="progress-fill" id="progressFill" style="width:11.1%;"></div>
+      </div>
+
+      <!-- Onboarding Card -->
+      <div class="ob-card">
+
+        <!-- Step 1: Gender -->
+        <div class="ob-step active" id="step-1">
+          <div class="ob-step-emoji">👤</div>
+          <h2>What's your gender?</h2>
+          <p class="ob-sub">This helps us tailor clothing styles to suit you best.</p>
+          <div class="options-list">
+            <button class="option-btn" data-field="gender" data-val="Male"><span class="option-emoji">♂️</span> Male</button>
+            <button class="option-btn" data-field="gender" data-val="Female"><span class="option-emoji">♀️</span> Female</button>
+            <button class="option-btn" data-field="gender" data-val="Non-binary"><span class="option-emoji">⚧️</span> Non-binary</button>
+            <button class="option-btn" data-field="gender" data-val="Prefer not to say"><span class="option-emoji">🔒</span> Prefer not to say</button>
+          </div>
+        </div>
+
+        <!-- Step 2: Skin Tone -->
+        <div class="ob-step" id="step-2">
+          <div class="ob-step-emoji">🎨</div>
+          <h2>Your skin tone?</h2>
+          <p class="ob-sub">We'll match colors that beautifully complement your complexion.</p>
+          <div class="skin-swatch-wrap" id="skinSwatches">
+            <div class="skin-swatch" data-val="Fair" style="background:#FAE0C8;" title="Fair"></div>
+            <div class="skin-swatch" data-val="Light" style="background:#F5C9A0;" title="Light"></div>
+            <div class="skin-swatch" data-val="Medium" style="background:#E8A870;" title="Medium"></div>
+            <div class="skin-swatch" data-val="Olive" style="background:#C8884A;" title="Olive"></div>
+            <div class="skin-swatch" data-val="Tan" style="background:#A0673A;" title="Tan"></div>
+            <div class="skin-swatch" data-val="Brown" style="background:#7A4520;" title="Brown"></div>
+            <div class="skin-swatch" data-val="Deep" style="background:#4A2510;" title="Deep"></div>
+          </div>
+          <p id="skinToneSelected" class="text-muted" style="margin-top:4px;"></p>
+        </div>
+
+        <!-- Step 3: Height -->
+        <div class="ob-step" id="step-3">
+          <div class="ob-step-emoji">📏</div>
+          <h2>Your height?</h2>
+          <p class="ob-sub">Helps suggest proportions and cuts that flatter your frame.</p>
+          <div class="height-input-wrap">
+            <input class="input-field" type="number" id="heightInput" placeholder="e.g. 175" min="50" max="250" />
+            <div class="height-unit-toggle">
+              <button class="unit-btn active" id="unitCm" onclick="setUnit('cm')">cm</button>
+              <button class="unit-btn" id="unitFt" onclick="setUnit('ft')">ft</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 4: Body Shape -->
+        <div class="ob-step" id="step-4">
+          <div class="ob-step-emoji">🧍</div>
+          <h2>Your body shape?</h2>
+          <p class="ob-sub">We'll suggest silhouettes that highlight your best features.</p>
+          <div class="options-grid">
+            <button class="option-btn" data-field="bodyShape" data-val="Rectangle"><span class="option-emoji">▭</span> Rectangle</button>
+            <button class="option-btn" data-field="bodyShape" data-val="Triangle"><span class="option-emoji">△</span> Triangle</button>
+            <button class="option-btn" data-field="bodyShape" data-val="Inverted Triangle"><span class="option-emoji">▽</span> Inv. Triangle</button>
+            <button class="option-btn" data-field="bodyShape" data-val="Oval"><span class="option-emoji">⬭</span> Oval</button>
+            <button class="option-btn" data-field="bodyShape" data-val="Hourglass"><span class="option-emoji">⧗</span> Hourglass</button>
+            <button class="option-btn" data-field="bodyShape" data-val="Not Sure"><span class="option-emoji">🤔</span> Not Sure</button>
+          </div>
+        </div>
+
+        <!-- Step 5: Age Range -->
+        <div class="ob-step" id="step-5">
+          <div class="ob-step-emoji">🎂</div>
+          <h2>Your age range?</h2>
+          <p class="ob-sub">Helps us align style suggestions to what suits your age group.</p>
+          <div class="options-grid">
+            <button class="option-btn" data-field="ageRange" data-val="13–17"><span class="option-emoji">🧑</span> 13–17</button>
+            <button class="option-btn" data-field="ageRange" data-val="18–24"><span class="option-emoji">👨</span> 18–24</button>
+            <button class="option-btn" data-field="ageRange" data-val="25–34"><span class="option-emoji">👨‍💼</span> 25–34</button>
+            <button class="option-btn" data-field="ageRange" data-val="35–44"><span class="option-emoji">🧑‍💼</span> 35–44</button>
+            <button class="option-btn" data-field="ageRange" data-val="45–54"><span class="option-emoji">👴</span> 45–54</button>
+            <button class="option-btn" data-field="ageRange" data-val="55+"><span class="option-emoji">🧓</span> 55+</button>
+          </div>
+        </div>
+
+        <!-- Step 6: Climate -->
+        <div class="ob-step" id="step-6">
+          <div class="ob-step-emoji">🌍</div>
+          <h2>Your location & climate?</h2>
+          <p class="ob-sub">So we can suggest seasonally appropriate outfits.</p>
+          <div class="options-list">
+            <button class="option-btn" data-field="climate" data-val="Tropical (hot & humid)"><span class="option-emoji">☀️</span> Tropical – Hot &amp; Humid</button>
+            <button class="option-btn" data-field="climate" data-val="Dry (hot & arid)"><span class="option-emoji">🏜️</span> Dry – Hot &amp; Arid</button>
+            <button class="option-btn" data-field="climate" data-val="Temperate (mild)"><span class="option-emoji">🌤️</span> Temperate – Mild</button>
+            <button class="option-btn" data-field="climate" data-val="Cold (winter)"><span class="option-emoji">❄️</span> Cold – Winter Friendly</button>
+            <button class="option-btn" data-field="climate" data-val="Variable (four seasons)"><span class="option-emoji">🍂</span> Variable – Four Seasons</button>
+          </div>
+        </div>
+
+        <!-- Step 7: Environment -->
+        <div class="ob-step" id="step-7">
+          <div class="ob-step-emoji">🏢</div>
+          <h2>Your typical environment?</h2>
+          <p class="ob-sub">Helps us match dress codes and practicality to your daily life.</p>
+          <div class="options-list">
+            <button class="option-btn" data-field="environment" data-val="Office / Corporate"><span class="option-emoji">💼</span> Office / Corporate</button>
+            <button class="option-btn" data-field="environment" data-val="Creative / Startup"><span class="option-emoji">🎨</span> Creative / Startup</button>
+            <button class="option-btn" data-field="environment" data-val="University / School"><span class="option-emoji">🎓</span> University / School</button>
+            <button class="option-btn" data-field="environment" data-val="Outdoor / Active"><span class="option-emoji">🌿</span> Outdoor / Active</button>
+            <button class="option-btn" data-field="environment" data-val="Work From Home"><span class="option-emoji">🏠</span> Work From Home</button>
+          </div>
+        </div>
+
+        <!-- Step 8: Occasion -->
+        <div class="ob-step" id="step-8">
+          <div class="ob-step-emoji">📅</div>
+          <h2>Most common occasion?</h2>
+          <p class="ob-sub">We'll optimize recommendations for your most frequent situations.</p>
+          <div class="options-grid">
+            <button class="option-btn" data-field="occasion" data-val="Casual Everyday"><span class="option-emoji">🛍️</span> Casual Everyday</button>
+            <button class="option-btn" data-field="occasion" data-val="Work / Professional"><span class="option-emoji">💼</span> Work / Professional</button>
+            <button class="option-btn" data-field="occasion" data-val="Dates / Social"><span class="option-emoji">💕</span> Dates / Social</button>
+            <button class="option-btn" data-field="occasion" data-val="Fitness / Sports"><span class="option-emoji">🏋️</span> Fitness / Sports</button>
+            <button class="option-btn" data-field="occasion" data-val="Formal Events"><span class="option-emoji">🎩</span> Formal Events</button>
+            <button class="option-btn" data-field="occasion" data-val="Mixed / Varies"><span class="option-emoji">🔄</span> Mixed / Varies</button>
+          </div>
+        </div>
+
+        <!-- Step 9: Style Preference -->
+        <div class="ob-step" id="step-9">
+          <div class="ob-step-emoji">✨</div>
+          <h2>Your style vibe?</h2>
+          <p class="ob-sub">Pick what resonates most with how you want to look and feel.</p>
+          <div class="options-grid">
+            <button class="option-btn" data-field="stylePreference" data-val="Minimal"><span class="option-emoji">⬜</span> Minimal</button>
+            <button class="option-btn" data-field="stylePreference" data-val="Streetwear"><span class="option-emoji">🧢</span> Streetwear</button>
+            <button class="option-btn" data-field="stylePreference" data-val="Formal"><span class="option-emoji">👔</span> Formal</button>
+            <button class="option-btn" data-field="stylePreference" data-val="Sporty"><span class="option-emoji">⚡</span> Sporty</button>
+            <button class="option-btn" data-field="stylePreference" data-val="Casual"><span class="option-emoji">😊</span> Casual</button>
+            <button class="option-btn" data-field="stylePreference" data-val="Boho / Eclectic"><span class="option-emoji">🌸</span> Boho / Eclectic</button>
+          </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="ob-foot">
+          <button class="ob-back" id="backBtn" onclick="prevStep()" style="display:none;">← Back</button>
+          <button class="ob-next" id="nextBtn" onclick="nextStep()">Continue →</button>
+        </div>
+
+      </div><!-- /ob-card -->
+    </div><!-- /ob-container -->
+  </main>
+
+  <script src="js/app.js"></script>
+  <script src="js/onboarding.js"></script>
+</body>
+</html>
