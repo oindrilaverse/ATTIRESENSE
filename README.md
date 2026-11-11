@@ -1,50 +1,47 @@
 # ✨ AttireSense
 
+> **Look Better, Effortlessly.** An AI-powered personal stylist application that provides context-aware, personalized outfit recommendations based on individual style preferences, body type, and environment.
+
 ![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
 ![Build](https://img.shields.io/badge/build-passing-brightgreen.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
-
-> **Look Better, Effortlessly.** An AI-powered personal stylist application that provides personalized outfit recommendations based on style preferences, body type, and occasion.
 
 ---
 
 ## 📸 Visuals
 
-*(Demo placeholder - A GIF or screenshot demonstrating the outfit generation process will be placed here)*
+![Demo](./assets/demo.gif)
 
 ---
 
 ## 🔗 Live Links
 
-- **Live Demo**: [AttireSense App](#) *(Coming Soon)*
-- **Repository**: [GitHub Link](#)
+- **Live Demo**: [**AttireSense App**](#) *(Coming Soon)*
+- **Repository**: [**GitHub Link**](#)
 
 ---
 
 ## 🚀 Features
 
-- **Personalized Recommendations**: Analyzes user profile (skin tone, body type, style preferences) to curate outfits.
-- **AI-Powered Styling**: Integrates with Google Gemini 2.0 Flash API to generate dynamic, intelligent fashion advice.
-- **Context-Aware**: Adjusts outfit suggestions based on the specific occasion, climate, and time of day.
-- **Local State Management**: Securely stores user profiles and API configurations using browser LocalStorage.
-- **Clean UI/UX**: Custom-built, responsive interface designed without heavy frontend frameworks for optimal performance.
+- **Personalized Recommendations**: Evaluates user profile (skin tone, body type, style preferences) to dynamically curate cohesive outfits.
+- **AI-Powered Styling**: Integrates seamlessly with the Google Gemini 2.0 Flash API to generate intelligent, context-sensitive fashion advice in real-time.
+- **Context-Aware Decisions**: Actively adjusts outfit suggestions based on the specific occasion, local climate, and time of day to ensure relevance.
+- **Local State Management**: Securely manages user profiles and API configurations using browser LocalStorage for a fast, backend-less experience.
+- **Clean UI/UX**: Custom-built, responsive interface designed completely with vanilla web technologies for optimal performance without framework overhead.
 
 ---
 
 ## 💻 Tech Stack
 
 ### Languages & Frameworks
-![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
-![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)
+- Frontend: HTML5, CSS3, Vanilla JavaScript
 
 ### API & Storage
-![Gemini AI](https://img.shields.io/badge/Gemini_2.0_Flash-8E75B2?style=for-the-badge&logo=googlebard&logoColor=white)
-![LocalStorage](https://img.shields.io/badge/LocalStorage-4A4A55?style=for-the-badge&logo=WebRTC&logoColor=white)
+- External APIs: Google Gemini 2.0 Flash API (via REST)
+- State Management: Browser LocalStorage
 
 ### Tools & Environments
-![VS Code](https://img.shields.io/badge/VS_Code-0078D4?style=for-the-badge&logo=visual%20studio%20code&logoColor=white)
-![SQL Plus](https://img.shields.io/badge/SQL_Plus-F80000?style=for-the-badge&logo=oracle&logoColor=white)
+- Deployment: Local static server
 
 ---
 
@@ -66,10 +63,10 @@
    ```
 
 2. **Configure Environment:**
-   Create a `.env` file based on the provided `.env.example` (if applicable) or enter your Gemini API key directly into the application's configuration screen upon launch.
+   If available, create a `.env` file based on the provided `.env.example`. Alternatively, you can securely enter your Gemini API key directly into the application's UI modal upon launch.
 
 3. **Run the Application:**
-   This project relies on vanilla web technologies and does not require a build step. You can serve it directly:
+   This project leverages vanilla web technologies and does not require a complex build step. You can serve it directly:
 
    Using Python 3:
    ```bash
@@ -89,29 +86,30 @@
 
 ## 🏗 Architecture / How it Works
 
-AttireSense operates entirely client-side, making it highly responsive and lightweight:
+AttireSense employs a lightweight, completely client-side architecture that eliminates traditional backend overhead:
 
-1. **User Onboarding**: The user fills out a 9-factor profile (body type, style, etc.), which is saved directly to `LocalStorage`.
-2. **AI Integration**: When a recommendation is requested (via the chat interface), the application constructs a tailored prompt combining the user's local profile and current context.
-3. **Data Fetching**: The prompt is sent via a REST call to the **Google Gemini 2.0 Flash API**.
-4. **Rendering**: The AI response is parsed and beautifully rendered in the DOM using Vanilla JavaScript, presenting a cohesive outfit with color-matching and style tips.
+1. **User Onboarding**: The user populates a comprehensive 9-factor profile (encompassing body type, style, environment, etc.), which is persisted directly to `LocalStorage`.
+2. **AI Integration**: When a style query is initiated via the chat interface, the application synthesizes a tailored prompt that combines the local user profile state and the current conversational context.
+3. **Data Fetching**: The synthesized prompt is securely transmitted via a REST call to the **Google Gemini 2.0 Flash API**.
+4. **Rendering**: The AI response is parsed and beautifully rendered in the DOM using Vanilla JavaScript, presenting a cohesive outfit card alongside targeted color-matching and style rationale.
 
 ---
 
 ## 🌟 Technical Highlights & Learnings
 
-- **Zero-Dependency Architecture**: Built completely without frontend frameworks like React or Vue. This enforced a strong understanding of DOM manipulation, vanilla state management, and custom CSS styling.
-- **Prompt Engineering**: Developed robust prompt templates for the Gemini API to ensure consistent, structured, and high-quality JSON or text responses tailored to fashion.
-- **Client-Side Storage**: Implemented secure, persistent storage of sensitive user preferences and API keys purely in the browser.
-- **Tooling Proficiency**: Utilized **Visual Studio Code** for streamlined development and debugging, while managing backend or supplementary data schemas via **SQL Plus** during the design phase.
+- **Zero-Dependency Architecture**: Engineered the entire application without reliance on frontend frameworks like React or Vue. This deliberate constraint honed a deep proficiency in direct DOM manipulation, vanilla state management patterns, and complex custom CSS architecture.
+- **Prompt Engineering**: Designed and refined robust system prompt templates for the Gemini API. This ensured consistent, structured, and highly relevant JSON/text responses tailored precisely to fashion mechanics and the specific output format required by the UI.
+- **Client-Side Storage Strategy**: Implemented secure, persistent storage of sensitive user preferences and API credentials purely within the browser's LocalStorage, prioritizing a frictionless user experience while mitigating backend data liability.
+- **Problem Solving**: Successfully overcame the challenge of reliably parsing unstructured AI text into a structured, aesthetically pleasing "Outfit Card" component using robust regular expressions and defensive string parsing techniques in JavaScript.
 
 ---
 
 ## 📬 Contact
 
-- **Developer**: [Your Name/Handle]
+- **Developer**: [Your Name]
 - **Email**: [your.email@example.com]
-- **LinkedIn**: [Your LinkedIn Profile]
+- **LinkedIn**: [Your LinkedIn Profile](#)
+- **Portfolio**: [Your Portfolio Website](#)
 
 ---
 *Look Better, Effortlessly.*
